@@ -9,5 +9,6 @@ class Node:
         self.nums = list(range(1, 10))
         random.shuffle(self.nums)
         self.index = 0
+        self.value = self.nums[self.index]
 
 

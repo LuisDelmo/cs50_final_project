@@ -1,8 +1,9 @@
 from itertools import cycle
 import numpy as np
-from collections import deque
+from collections import deque, defaultdict
 from Node import Node
-import time
+import math
+
 
 
 class SudoBoard:
@@ -23,20 +24,21 @@ class SudoBoard:
         return True
 
     #DEPRECATED changed the method to the one below
-    # def check_full_board(self,board):
-    #     rows_len = len(board)
-    #     for y,qdrant in zip(range(rows_len),cycle([1,2,3])):
-    #         row = board[y]
-    #         column = board[:,y]
+    #TODO may use later
+    def check_full_board(self,board):
+        rows_len = len(board)
+        for y,qdrant in zip(range(rows_len),cycle([1,2,3])):
+            row = board[y]
+            column = board[:,y]
 
-    #         #quadrant logic, very elegant in my opinion
-    #         indexy = qdrant*3
-    #         indexx = (y+1)-qdrant
-    #         quadrant = board[indexx:indexx+3,indexy-3:indexy].flatten()
+            #quadrant logic, very elegant in my opinion
+            indexy = qdrant*3
+            indexx = (y+1)-qdrant
+            quadrant = board[indexx:indexx+3,indexy-3:indexy].flatten()
 
-    #         if not all([self.check_this(row),self.check_this(column),self.check_this(quadrant)]):
-    #             return False
-    #     return True
+            if not all([self.check_this(row),self.check_this(column),self.check_this(quadrant)]):
+                return False
+        return True
 
 
     def check_cell_board(self,coords,board):
@@ -61,36 +63,47 @@ class SudoBoard:
                 board[y,x] = num
                 if self.check_cell_board(board=board,coords=(y,x)):
                     possible.append(num)
-            board[y,x] = 0
+                board[y,x] = value_num
         if possible:
             return possible
         return None
 
 
-    # def generate_boilerplate(self):
-    #     n_y,n_x = self.size
-    #     board = self.board
-    #     for y in range(n_y):
-    #         for x in range(n_x):
-    #             new_num = random.choice(self.check_possiblenums(y,x,board))
-    #             if not new_num:
-    #                 print('error')
-    #                 return
-    #             board[y,x] = new_num
-    #             print(board)
-    #     return board
+    def heuristic_function(self,board):
+        #func to return in order for now the coords with least possible nums
+        size = len(board)
+
+        min_size_possible = math.inf
+        best_coord = None
+        possibilities = None
+
+        for y in range(size):
+            for x in range(size):
+                if board[y,x] != 0:
+                    continue
+
+                possible_for_this = self.check_possiblenums(y,x,board)
+                possible_size = len(possible_for_this) if possible_for_this is not None else math.inf
+
+                if possible_size < min_size_possible:
+                    min_size_possible = possible_size
+                    best_coord = (y,x)
+                    possibilities = possible_for_this
 
 
+        if best_coord is not None:
+            return best_coord, possibilities
+        return (None,None), None
 
 
-    #TODO almost done, now i need a way to count num of solutions and try to optimize the func
+    #TODO do it from scratch again
     def solve(self,board):
         # GET size of board
-        n_y,n_x = self.size
 
-        empty_cells = [(y,x) for y in range(n_y) for x in range(n_x) if board[y,x] == 0]
 
-        f_y,f_x = empty_cells.pop()
+        # empty_cells = [(y,x) for y in range(n_y) for x in range(n_x) if board[y,x] == 0]
+        empty_cells = self.heuristic_function(board)
+        f_y,f_x = empty_cells.pop(0)
         #initialize deque to queue and append first node
         queue = deque()
         first_node = Node(coords=(f_y,f_x))
@@ -103,6 +116,7 @@ class SudoBoard:
 
             #get node from queue and get its init value from self
             node = queue.pop()
+            # node.nums = []
             node_num = node.nums[node.index]
             ny,nx = node.coords
 
@@ -122,7 +136,7 @@ class SudoBoard:
                     #TODO LATER add a check backtrack and append this solution to know if board have more than 1 solution
                     if node.parent != None:
                         new_board[ny,nx] = 0
-                        empty_cells.append((ny,nx))
+                        empty_cells.insert(0,(ny,nx))
                         node = node.parent
                         node.index += 1 if node.index < 8 else 0
                         queue.append(node)
@@ -139,9 +153,10 @@ class SudoBoard:
 
                 if not empty_cells:
                     solutions.append(new_board)
+
                     return solutions
                 else:
-                    child_y,child_x = empty_cells.pop()
+                    child_y,child_x = empty_cells.pop(0)
                     #IF found empty create child node to make that logic of values again
                     new_node = Node(coords=(child_y,child_x),parent=node)
                     queue.append(new_node)
@@ -153,3 +168,26 @@ class SudoBoard:
         #if not queue all solution found etc return board TODO
         print('Solved')
         return new_board
+
+
+    def new_solve(self,board):
+        #add a None check valid later
+        queue = deque()
+        new_board = np.array(board)
+        (y,x), f_possible = self.heuristic_function(new_board)
+
+        queue.append(((y,x),f_possible))
+
+        while queue:
+            node, possible = queue.pop()
+
+            if possible is None:
+
+
+            num_add = possible.pop()
+            new_board[y,x] = num_add
+
+
+
+
+

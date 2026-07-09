@@ -1,5 +1,6 @@
 import numpy as np
 from SudoBoard import SudoBoard
+import time
 
 #TODO 3 func outside the class to satisfy check50
 def initialize_sudoku(name,level):
@@ -7,6 +8,31 @@ def initialize_sudoku(name,level):
 
 
 sudoku = SudoBoard('Luis')
+
+def beacnkmark_time(board):
+    for i in range(50):
+        start_time = time.perf_counter()
+        _ = sudoku.solve(board)
+        end_time = time.perf_counter()
+
+        this_time = end_time - start_time
+        times.append(this_time)
+        print(i)
+
+
+    # 4. Calculate the difference
+
+
+    avg_time = sum(times) / len(times)
+    best_time = min(times)
+    worst_time = max(times)
+    time_eplapsed = sum(times)
+
+    print("\n--- Teste sudoku 50 resoluções ---")
+    print(f"Media de tempo: {avg_time:.6f} seconds")
+    print(f"Resolucao mais rapida:  {best_time:.6f} seconds")
+    print(f"Resolucao mais lenta:  {worst_time:.6f} seconds")
+    print(f"tempo total  :  {time_eplapsed:.6f} seconds")
 
 valid_sudoku = np.array([
     [5, 3, 4, 6, 7, 8, 9, 1, 2],
@@ -73,9 +99,31 @@ test_board = np.array([
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ])
 
+
+
+medium_puzzle = np.array([
+    [0, 0, 0, 6, 0, 0, 4, 0, 0],
+    [7, 0, 0, 0, 0, 3, 6, 0, 0],
+    [0, 0, 0, 0, 9, 1, 0, 8, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 5, 0, 1, 8, 0, 0, 0, 3],
+    [0, 0, 0, 3, 0, 6, 0, 4, 5],
+    [0, 4, 0, 2, 0, 0, 0, 6, 0],
+    [9, 0, 3, 0, 0, 0, 0, 0, 0],
+    [0, 2, 0, 0, 0, 0, 1, 0, 0]
+])
+
 sudoku.board = sparse_board
 # print(sudoku.board)
-print(sudoku.solve(easy_puzzle))
+
+
+
+# print(sudoku.heuristic_function(valid_sudoku))
+# print(sudoku.check_possiblenums(4,4,easy_puzzle))
+print(sudoku.new_solve(medium_puzzle))
+
+
+# print(sudoku.heuristic_function(easy_puzzle))
 
 
 # print(sudoku.check_cell_board(board=broken_test_board,coords=(3,4)))
