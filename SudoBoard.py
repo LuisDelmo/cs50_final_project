@@ -91,7 +91,7 @@ class SudoBoard:
                     possibilities = possible_for_this
 
 
-        if best_coord is not None:
+        if possibilities is not None:
             return best_coord, possibilities
         return (None,None), None
 
@@ -170,22 +170,28 @@ class SudoBoard:
         return new_board
 
 
-    def new_solve(self,board):
+    def new_solve(self,board,visited=None):
         #add a None check valid later
-        queue = deque()
-        new_board = np.array(board)
-        (y,x), f_possible = self.heuristic_function(new_board)
 
-        queue.append(((y,x),f_possible))
+        queue = deque()
+        node_index, possible = self.heuristic_function(board)
+        queue.append((node_index,possible))
+        this_board = board.copy()
+        path = deque()
 
         while queue:
-            node, possible = queue.pop()
+            node_index ,possible = queue.pop()
+            if possibile:
+                this_num = possible.pop()
+                this_board[node_index] = this_num
+                path.append(node_index)
+                node_index, possible = self.heuristic_function(this_board)
+            else:
+                while not possible:
+                    this_index = path.pop()
+                    this_board[this_index] = 0
+                    node_index, possible = self.heuristic_function(this_board)
 
-            if possible is None:
-
-
-            num_add = possible.pop()
-            new_board[y,x] = num_add
 
 
 

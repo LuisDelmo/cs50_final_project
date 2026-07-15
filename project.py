@@ -113,6 +113,21 @@ medium_puzzle = np.array([
     [0, 2, 0, 0, 0, 0, 1, 0, 0]
 ])
 
+
+sudoku_board = np.array([
+    [0, 0, 0,  7, 8, 9,  0, 0, 0], # Row 0 provides: {7, 8, 9} to the empty cells
+    [1, 2, 3,  0, 0, 0,  0, 0, 0], # Box 0 provides: {1, 2, 3}
+    [4, 5, 6,  0, 0, 0,  0, 0, 0], # Box 0 provides: {4, 5, 6}
+
+    [0, 0, 0,  0, 0, 0,  0, 0, 0],
+    [0, 0, 0,  0, 0, 0,  0, 0, 0],
+    [0, 0, 0,  0, 0, 0,  0, 0, 0],
+
+    [0, 0, 0,  0, 0, 0,  0, 0, 0],
+    [0, 0, 0,  0, 0, 0,  0, 0, 0],
+    [0, 0, 0,  0, 0, 0,  0, 0, 0]
+])
+
 sudoku.board = sparse_board
 # print(sudoku.board)
 
@@ -120,7 +135,8 @@ sudoku.board = sparse_board
 
 # print(sudoku.heuristic_function(valid_sudoku))
 # print(sudoku.check_possiblenums(4,4,easy_puzzle))
-print(sudoku.new_solve(medium_puzzle))
+print(sudoku.heuristic_function(sudoku_board))
+# print(sudoku.new_solve(board=medium_puzzle))
 
 
 # print(sudoku.heuristic_function(easy_puzzle))

@@ -6,8 +6,7 @@ class Node:
         self.coords = coords
         self.parent = parent
         #initialize list and shuffle self
-        self.nums = list(range(1, 10))
-        random.shuffle(self.nums)
+        self.nums = []
         self.index = 0
         self.value = self.nums[self.index]
 
