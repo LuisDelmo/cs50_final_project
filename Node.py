@@ -1,5 +1,6 @@
 import random
 
+#DEPRECATED left here just for show, made a recursive func to solve
 class Node:
     def __init__(self,coords,parent=None):
         #TODO maybe remove complty the node class doesnt seem that useful

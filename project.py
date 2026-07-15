@@ -135,8 +135,9 @@ sudoku.board = sparse_board
 
 # print(sudoku.heuristic_function(valid_sudoku))
 # print(sudoku.check_possiblenums(4,4,easy_puzzle))
-print(sudoku.heuristic_function(sudoku_board))
-# print(sudoku.new_solve(board=medium_puzzle))
+# print(sudoku.heuristic_function(sudoku_board))
+print(sudoku.new_solve(board=sparse_board))
+
 
 
 # print(sudoku.heuristic_function(easy_puzzle))

@@ -74,29 +74,36 @@ class SudoBoard:
         size = len(board)
 
         min_size_possible = math.inf
+        zero_inboard = False
         best_coord = None
         possibilities = None
 
         for y in range(size):
             for x in range(size):
-                if board[y,x] != 0:
-                    continue
+                if board[y,x] == 0:
+                    if not zero_inboard:
+                        zero_inboard = True
+                    possible_for_this = self.check_possiblenums(y,x,board)
 
-                possible_for_this = self.check_possiblenums(y,x,board)
-                possible_size = len(possible_for_this) if possible_for_this is not None else math.inf
+                    if possible_for_this is None:
+                        continue
 
-                if possible_size < min_size_possible:
-                    min_size_possible = possible_size
-                    best_coord = (y,x)
-                    possibilities = possible_for_this
+                    possible_size = len(possible_for_this)
+
+                    if possible_size < min_size_possible:
+                        min_size_possible = possible_size
+                        best_coord = (y,x)
+                        possibilities = possible_for_this
+
+                    if min_size_possible == 1:
+                        return best_coord, possibilities
+        if not zero_inboard:
+            return zero_inboard, possibilities
+        return best_coord, possibilities
 
 
-        if possibilities is not None:
-            return best_coord, possibilities
-        return (None,None), None
 
-
-    #TODO do it from scratch again
+    #DEPRECATED first solve function i did, was too slow, tried to finetune with the heuristic but still slow
     def solve(self,board):
         # GET size of board
 
@@ -170,27 +177,27 @@ class SudoBoard:
         return new_board
 
 
-    def new_solve(self,board,visited=None):
+    def new_solve(self,board,solutions=None):
         #add a None check valid later
+        if solutions is None:
+            solutions = []
 
-        queue = deque()
-        node_index, possible = self.heuristic_function(board)
-        queue.append((node_index,possible))
-        this_board = board.copy()
-        path = deque()
+        coords,possible = self.heuristic_function(board)
 
-        while queue:
-            node_index ,possible = queue.pop()
-            if possibile:
-                this_num = possible.pop()
-                this_board[node_index] = this_num
-                path.append(node_index)
-                node_index, possible = self.heuristic_function(this_board)
-            else:
-                while not possible:
-                    this_index = path.pop()
-                    this_board[this_index] = 0
-                    node_index, possible = self.heuristic_function(this_board)
+        if coords == False:
+            solutions.append(np.copy(board))
+            return
+
+        while possible:
+            to_check = possible.pop()
+            board[coords] = to_check
+            
+            self.new_solve(board,solutions)
+
+            board[coords] = 0
+
+        return solutions
+
 
 
 
