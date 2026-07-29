@@ -7,7 +7,7 @@ def initialize_sudoku(name,level):
     pass
 
 
-sudoku = SudoBoard('Luis')
+
 
 def beacnkmark_time(board):
     for i in range(50):
@@ -128,20 +128,22 @@ sudoku_board = np.array([
     [0, 0, 0,  0, 0, 0,  0, 0, 0]
 ])
 
-sudoku.board = sparse_board
+# sudoku.board = sparse_board
 # print(sudoku.board)
+
+sudoku = SudoBoard('Luis')
+sudoku.board = sparse_board
+
+print(sudoku.new_heuristic())
 
 
 
 # print(sudoku.heuristic_function(valid_sudoku))
 # print(sudoku.check_possiblenums(4,4,easy_puzzle))
 # print(sudoku.heuristic_function(sudoku_board))
-print(sudoku.new_solve(board=sparse_board))
+#
+# print(sudoku.new_solve(medium_puzzle,fastest=True))
 
 
-
-# print(sudoku.heuristic_function(easy_puzzle))
-
-
-# print(sudoku.check_cell_board(board=broken_test_board,coords=(3,4)))
-
+# print(sudoku.generate_board())
+# print(sudoku.new_solve(fastest=True))

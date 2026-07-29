@@ -1,6 +1,6 @@
 from itertools import cycle
 import numpy as np
-from collections import deque, defaultdict
+from collections import deque
 from Node import Node
 import math
 
@@ -22,24 +22,6 @@ class SudoBoard:
                 return False
             set_unit.add(cell)
         return True
-
-    #DEPRECATED changed the method to the one below
-    #TODO may use later
-    def check_full_board(self,board):
-        rows_len = len(board)
-        for y,qdrant in zip(range(rows_len),cycle([1,2,3])):
-            row = board[y]
-            column = board[:,y]
-
-            #quadrant logic, very elegant in my opinion
-            indexy = qdrant*3
-            indexx = (y+1)-qdrant
-            quadrant = board[indexx:indexx+3,indexy-3:indexy].flatten()
-
-            if not all([self.check_this(row),self.check_this(column),self.check_this(quadrant)]):
-                return False
-        return True
-
 
     def check_cell_board(self,coords,board):
         y,x = coords
@@ -100,6 +82,11 @@ class SudoBoard:
         if not zero_inboard:
             return zero_inboard, possibilities
         return best_coord, possibilities
+
+    def new_heuristic(self):
+        #3 cases possible hueristic
+        # no num in board
+        #
 
 
 
@@ -177,27 +164,30 @@ class SudoBoard:
         return new_board
 
 
-    def new_solve(self,board,solutions=None):
+    def new_solve(self,solutions=None,fastest=False):
         #add a None check valid later
         if solutions is None:
             solutions = []
-
-        coords,possible = self.heuristic_function(board)
+        print(self.board)
+        coords,possible = self.heuristic_function(self.board)
 
         if coords == False:
+            if fastest:
+                return np.copy(self.board)
             solutions.append(np.copy(board))
             return
 
         while possible:
             to_check = possible.pop()
-            board[coords] = to_check
-            
-            self.new_solve(board,solutions)
+            self.board[coords] = to_check
 
-            board[coords] = 0
+            board_s = self.new_solve(solutions,fastest=fastest)
+            if fastest and isinstance(board_s,np.ndarray):
+                return board_s
+
+            self.board[coords] = 0
 
         return solutions
-
 
 
 
