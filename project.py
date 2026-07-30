@@ -1,5 +1,5 @@
 import numpy as np
-from SudoBoard import SudoBoard
+from DEPRECATED_SudoBoard import SudoBoard
 import time
 
 #TODO 3 func outside the class to satisfy check50
