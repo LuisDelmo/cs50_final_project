@@ -1,7 +1,7 @@
 from itertools import cycle
 import numpy as np
 from collections import deque
-from Node import Node
+from DEPRECATED_Node import Node
 import math
 
 
