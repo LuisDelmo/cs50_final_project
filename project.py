@@ -1,6 +1,6 @@
 import numpy as np
 import random
-
+import asyncio
 
 
 #check if this: [row, collumn or flatten_quadrant] is valid
@@ -131,8 +131,7 @@ def generate_board(name,level=1):
 
     hidden = 0
     while True:
-        #TODO remove vizualization later
-        print(board)
+        
         
         if hidden >= to_hide:
             return board
@@ -205,4 +204,4 @@ hardest_sudoku = np.array([
 
 
 # print(heuristic_function(hardest_sudoku))
-print(generate_board('Luis'))
+# print(generate_board('Luis'))

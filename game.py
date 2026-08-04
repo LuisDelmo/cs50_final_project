@@ -1,6 +1,6 @@
 import sys, pygame
 import asyncio
-
+from project import generate_board
 
 
 def initialize_game():
@@ -22,7 +22,7 @@ def load_numbers_images():
         this_number = pygame.transform.scale_by(this_number, 0.3)
         numbers_map[number] = this_number
 
-        c_this_number = pygame.image.load(f'images\\numbers\\{number}_c.png').convert()
+        c_this_number = pygame.image.load(f'images\\clues_nums\\{number}_c.png').convert()
         c_this_number = pygame.transform.scale_by(c_this_number, 0.3)
         c_numbers_map[number] = this_number
 
@@ -30,7 +30,7 @@ def load_numbers_images():
 
 
 #size_num = 48,48
-def draw_numbers(numx,numbers_map):
+def draw_numbers(numx,numbers_map,screen):
     
     for number_index in numbers_map.keys():
             if number_index >= 5:
@@ -100,18 +100,17 @@ def get_click_cell(event):
     
         if 0 <= cm_x <= 8 and 0 <= cm_y <= 8:
             this_grid = cells[(cm_x, cm_y)]
-
-        return this_grid
+            return this_grid
 
 def game_loop():
 
-    screen = initialize_game
+    screen = initialize_game()
 
     numbers_map, c_numbers_map = load_numbers_images()
     size_num = numx,numy = numbers_map[1].get_height(), numbers_map[1].get_width()
     size_grid = g_x,g_y = (500,500)
 
- 
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
@@ -121,7 +120,7 @@ def game_loop():
         screen.fill('white')
 
         draw_grid(screen=screen)
-        draw_numbers(numx)
+        draw_numbers(numx=numx,numbers_map=numbers_map,screen=screen)
         
         pygame.display.flip()
 
