@@ -68,7 +68,6 @@ def heuristic_function(board):
                 #invalid
                 return False, (False,False)
 
-
             if size_possible < min_possible:
                 min_possible = size_possible
                 possible = possible_this
@@ -85,6 +84,8 @@ def solve(board,solutions=None,fastest=False,calls=None):
         if len(solutions) >= 2:
             return
 
+        #TODO remove vizualization later
+        print(board)
         if possible is True:
             c_board = np.copy(board)
             if fastest:
@@ -130,6 +131,9 @@ def generate_board(name,level=1):
 
     hidden = 0
     while True:
+        #TODO remove vizualization later
+        print(board)
+        
         if hidden >= to_hide:
             return board
         random.shuffle(coords)
