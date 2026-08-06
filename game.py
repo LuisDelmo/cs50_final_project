@@ -228,7 +228,7 @@ def game_loop():
         if not empty_board:
             screen.fill('white')
             won = font.render("You WON", True, 'Green')
-            screen.blit(text_surface)
+            screen.blit(won)
 
 
         pygame.display.flip()
