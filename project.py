@@ -84,8 +84,6 @@ def solve(board,solutions=None,fastest=False,calls=None):
         if len(solutions) >= 2:
             return
 
-        #TODO remove vizualization later
-        print(board)
         if possible is True:
             c_board = np.copy(board)
             if fastest:
@@ -105,6 +103,7 @@ def solve(board,solutions=None,fastest=False,calls=None):
 
             board[coords] = 0
 
+        
         return len(solutions), solutions
 
 def generate_board(name,level=1):
