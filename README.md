@@ -1,4 +1,5 @@
-# cs50_final_project Sudoku Generator & Solver
+# cs50_final_project 
+# Sudoku Generator & Solver
 
 Simple recursion backtracking algorithm for solving and generate a Sudoku board/game, also make a very simple
 pygame vizualization for better understanding.
