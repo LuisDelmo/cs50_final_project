@@ -135,7 +135,7 @@ def draw_clues(screen,board,c_numbers_map,cells):
 
 
 
-def game_loop(name,generate_board,solve):
+def game_loop(name,level,generate_board,solve):
 
     screen, lives = initialize_game()
     select_empty_cell = False
@@ -149,7 +149,7 @@ def game_loop(name,generate_board,solve):
 
     rect_num_map = rect_numbers(numx=numx,numbers_map=numbers_map)
 
-    board = generate_board(name)
+    board = generate_board(name,level)
 
     while True:
         for event in pygame.event.get():

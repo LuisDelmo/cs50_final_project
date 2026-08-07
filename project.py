@@ -38,9 +38,8 @@ def check_possiblenums(coords,board):
                 if check_cell_board(board=board,coords=(coords)):
                     possible.append(num)
                 board[coords] = value_num
-        if possible:
-            return possible
-        return []
+        return possible
+        
 
 #function to find best cell to try and solve
 def heuristic_function(board):
@@ -75,7 +74,7 @@ def heuristic_function(board):
 
     return possible, coords
 
-def solve(board,solutions=None,fastest=False,calls=None):
+def solve(board,solutions=None,fastest=False):
         #add a None check valid later
         if solutions is None:
             solutions = []
@@ -148,7 +147,17 @@ def generate_board(name,level=1):
 
 
 def main():
-    name = input('What is your name?')
+    name = input('What is your name?: ')
+
+    while True:
+        try:
+            level = int(input('What level do you want to play?: '))
+            if 0 < level < 4:
+                break
+        except ValueError:
+            pass
+        print('Try again!! Level must be a number between 1 and 3')
+         
     game_loop(name,generate_board,solve)
 
 

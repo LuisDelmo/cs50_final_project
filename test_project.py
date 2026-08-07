@@ -1,5 +1,4 @@
 import numpy as np
-
 from project import check_this, check_cell_board, solve
 
 
