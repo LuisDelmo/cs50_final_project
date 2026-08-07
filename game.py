@@ -145,14 +145,12 @@ def game_loop(name,generate_board,solve):
     numbers_map, c_numbers_map = load_numbers_images()
     size_num = numx,numy = numbers_map[1].get_height(), numbers_map[1].get_width()
     cells, rect_cell = generate_grid()
-    size_grid = g_x,g_y = (500,500)
+    
 
     rect_num_map = rect_numbers(numx=numx,numbers_map=numbers_map)
 
     board = generate_board(name)
 
-    
-    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
@@ -220,7 +218,7 @@ def game_loop(name,generate_board,solve):
                 select_num = False
 
         if lives <= 0:
-            solve(board=board,fastest=True)
+            board = solve(board=board,fastest=True)
             text_surface = font.render("You lost", True, 'Red')
             screen.blit(text_surface)
 
