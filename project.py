@@ -1,6 +1,6 @@
 import numpy as np
 import random
-import asyncio
+from game import game_loop
 
 
 #check if this: [row, collumn or flatten_quadrant] is valid
@@ -131,7 +131,6 @@ def generate_board(name,level=1):
     hidden = 0
     while True:
         
-        
         if hidden >= to_hide:
             return board
         random.shuffle(coords)
@@ -148,59 +147,11 @@ def generate_board(name,level=1):
 
 
 
-
-easy_puzzle = np.array([
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-])
+def main():
+    name = input('What is your name?')
+    game_loop(name,generate_board,solve)
 
 
-valid_sudoku = np.array([
-    [5, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-    [8, 5, 9, 4, 2, 1, 7, 6, 6],
-    [2, 7, 6, 8, 5, 3, 1, 5, 4],
-    [9, 1, 4, 7, 6, 5, 2, 0, 3],
-    [4, 2, 3, 7, 8, 9, 6, 5, 1],
-    [7, 1, 9, 2, 3, 4, 8, 3, 5],
-    [3, 6, 5, 4, 1, 9, 7, 2, 8]
-])
 
-solved_board = np.array([
-    [5, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-
-    [8, 5, 9, 7, 6, 1, 4, 2, 3],
-    [4, 2, 6, 8, 5, 3, 7, 9, 1],
-    [7, 1, 3, 9, 2, 4, 8, 5, 6],
-
-    [9, 6, 1, 5, 3, 7, 2, 8, 4],
-    [2, 8, 7, 4, 1, 9, 6, 3, 5],
-    [3, 4, 5, 2, 8, 6, 1, 7, 9]
-], dtype=int)
-
-
-hardest_sudoku = np.array([
-    [8, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 3, 6, 0, 0, 0, 0, 0],
-    [0, 7, 0, 0, 9, 0, 2, 0, 0],
-    [0, 5, 0, 0, 0, 7, 0, 0, 0],
-    [0, 0, 0, 0, 4, 5, 7, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 3, 0],
-    [0, 0, 1, 0, 0, 0, 0, 6, 8],
-    [0, 0, 8, 5, 0, 0, 0, 1, 0],
-    [0, 9, 0, 0, 0, 0, 4, 0, 0]
-], dtype=int)
-
-
-# print(heuristic_function(hardest_sudoku))
-# print(generate_board('Luis'))
+if __name__ == '__main__':
+    main()

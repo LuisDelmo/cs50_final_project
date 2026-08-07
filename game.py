@@ -1,6 +1,5 @@
 import sys, pygame
 import numpy as np
-from project import generate_board,solve
 
 
 def initialize_game():
@@ -136,7 +135,7 @@ def draw_clues(screen,board,c_numbers_map,cells):
 
 
 
-def game_loop():
+def game_loop(name,generate_board,solve):
 
     screen, lives = initialize_game()
     select_empty_cell = False
@@ -150,7 +149,7 @@ def game_loop():
 
     rect_num_map = rect_numbers(numx=numx,numbers_map=numbers_map)
 
-    board = generate_board('Luis')
+    board = generate_board(name)
 
     
     
@@ -221,7 +220,7 @@ def game_loop():
                 select_num = False
 
         if lives <= 0:
-            screen.fill('white')
+            solve(board=board,fastest=True)
             text_surface = font.render("You lost", True, 'Red')
             screen.blit(text_surface)
 
