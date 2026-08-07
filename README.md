@@ -71,7 +71,7 @@ pip install -r requirements.txt
 python project.py
 
 ## Testing
-pytest -m test_project.py
+pytest test_project.py
 
 ## Author
 Luis Fernando Faria Delmondes
